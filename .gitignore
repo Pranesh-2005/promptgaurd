@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+dist/
+build/
+graphify-out/
+gaurd_model/
+*.parquet
+*.bak
+.pkg_test/
+.env
+logs/
+.github/
+.benchmarks/

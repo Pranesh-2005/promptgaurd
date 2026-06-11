@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "promptgaurd"
+version = "0.2.0"
+description = "Universal LLM prompt guard against injection attacks across all providers"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [
+    {name = "Pranesh", email = "praneshmadhan646@gmail.com"}
+]
+keywords = ["llm", "prompt", "injection", "security", "guard", "openai", "anthropic", "azure", "groq", "aws"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "torch>=2.0.0",
+    "transformers>=4.30.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-benchmark>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "twine>=4.0.0",
+    "build>=0.10.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Pranesh-2005/promptgaurd"
+Repository = "https://github.com/Pranesh-2005/promptgaurd"
+Issues = "https://github.com/Pranesh-2005/promptgaurd/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["promptgaurd*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
