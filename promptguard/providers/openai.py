@@ -9,7 +9,7 @@ OpenRouter, Together, Gemini's OpenAI-compat endpoint, etc. Pass
 
 from typing import Any, Optional
 from .base import ProviderAdapter
-from ..core import Gaudrial
+from ..core import Guardial
 from ..responses import openai_blocked_response
 
 
@@ -19,10 +19,10 @@ class OpenAIAdapter(ProviderAdapter):
     def __init__(
         self,
         client: Any,
-        gaudrial: Optional[Gaudrial] = None,
+        Guardial: Optional[Guardial] = None,
         provider_name: str = "openai",
     ) -> None:
-        super().__init__(client, gaudrial)
+        super().__init__(client, Guardial)
         self.provider_name = provider_name
         self._chat = _GuardedChat(self)
 

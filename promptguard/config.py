@@ -1,4 +1,4 @@
-"""Configuration for Gaudrial guard engine."""
+"""Configuration for Guardial guard engine."""
 
 from typing import Any, Callable, Dict, List, Optional
 
@@ -21,7 +21,7 @@ class Config:
         fail_mode: Optional[str] = None,
         log_level: Optional[str] = None,
         log_sink: Optional[Callable[[Dict[str, Any]], None]] = None,
-        log_file: Optional[str] = "logs/promptgaurd.jsonl",
+        log_file: Optional[str] = "logs/promptguard.jsonl",
         custom_detectors: Optional[List[BaseDetector]] = None,
         mask_raw_prompt: bool = True,
         block_mode: str = "mock",

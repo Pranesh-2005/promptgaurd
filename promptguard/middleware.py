@@ -3,7 +3,7 @@
 from typing import Any, Callable, Dict, Optional
 from functools import wraps
 
-from .core import Gaudrial, Decision
+from .core import Guardial, Decision
 from .exceptions import GuardBlocked
 from .responses import openai_blocked_response
 
@@ -14,11 +14,11 @@ class LLMInterceptor:
     def __init__(
         self,
         provider_client: Any,
-        gaudrial: Optional[Gaudrial] = None,
+        Guardial: Optional[Guardial] = None,
         provider_name: str = "unknown",
     ) -> None:
         self.client = provider_client
-        self.gaudrial = gaudrial or Gaudrial()
+        self.Guardial = Guardial or Guardial()
         self.provider_name = provider_name
         self._intercepted = False
         self._original_methods: Dict[str, Any] = {}
@@ -66,15 +66,15 @@ class LLMInterceptor:
         @wraps(original)
         def guarded(*args: Any, **kwargs: Any) -> Any:
             prompt = self._extract_prompt(*args, **kwargs)
-            decision = self.gaudrial.guard(prompt, provider=self.provider_name)
-            if decision.decision == "BLOCK" and self.gaudrial.config.block_mode == "mock":
-                self.gaudrial.logger.log_block_action(
+            decision = self.Guardial.guard(prompt, provider=self.provider_name)
+            if decision.decision == "BLOCK" and self.Guardial.config.block_mode == "mock":
+                self.Guardial.logger.log_block_action(
                     decision.prompt_id, self.provider_name, "mock_response", decision.reason
                 )
                 return openai_blocked_response(
                     decision,
                     model=kwargs.get("model", "unknown"),
-                    message=self.gaudrial.config.block_message,
+                    message=self.Guardial.config.block_message,
                 )
             return original(*args, **kwargs)
 

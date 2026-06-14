@@ -1,8 +1,8 @@
 """Tests for the BERT-mini detector (model required)."""
 
 import pytest
-from promptgaurd.detectors.base import BaseDetector
-from promptgaurd.detectors.bert_detector import BertDetector
+from promptguard.detectors.base import BaseDetector
+from promptguard.detectors.bert_detector import BertDetector
 
 
 class TestBaseDetector:

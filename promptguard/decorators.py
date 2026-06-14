@@ -3,7 +3,7 @@
 from functools import wraps
 from typing import Any, Callable, Optional
 
-from .core import Gaudrial, Decision
+from .core import Guardial, Decision
 from .exceptions import GuardBlocked
 from .responses import (
     anthropic_blocked_response,
@@ -18,7 +18,7 @@ _RESPONSE_BUILDERS = {
 }
 
 
-def gaudrial_guard(
+def Guardial_guard(
     policy: Optional[str] = None,
     threshold: Optional[float] = None,
     fail_mode: Optional[str] = None,
@@ -36,11 +36,11 @@ def gaudrial_guard(
     flowing. Pass ``block_mode="raise"`` for the old GuardBlocked behavior.
 
     Usage:
-        @gaudrial_guard(policy="strict")
+        @Guardial_guard(policy="strict")
         def chat(messages):
             return openai_client.chat.completions.create(model="gpt-4", messages=messages)
     """
-    g = Gaudrial(
+    g = Guardial(
         policy=policy,
         threshold=threshold,
         fail_mode=fail_mode,
@@ -77,7 +77,7 @@ def gaudrial_guard(
     return decorator
 
 
-def gaudrial_audit(
+def Guardial_audit(
     policy: Optional[str] = None,
     provider: str = "unknown",
     log_sink: Optional[Callable[[Any], None]] = None,
@@ -85,11 +85,11 @@ def gaudrial_audit(
     """Decorator that only audits (never blocks) LLM calls.
 
     Usage:
-        @gaudrial_audit(policy="standard")
+        @Guardial_audit(policy="standard")
         def chat(messages):
             return openai_client.chat.completions.create(model="gpt-4", messages=messages)
     """
-    g = Gaudrial(policy=policy, fail_mode="open", log_sink=log_sink)
+    g = Guardial(policy=policy, fail_mode="open", log_sink=log_sink)
 
     def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         @wraps(func)

@@ -2,15 +2,15 @@
 
 from typing import Any, Optional
 from .base import ProviderAdapter
-from ..core import Gaudrial
+from ..core import Guardial
 from ..responses import anthropic_blocked_response
 
 
 class AnthropicAdapter(ProviderAdapter):
     """Wraps an Anthropic client to guard prompts."""
 
-    def __init__(self, client: Any, gaudrial: Optional[Gaudrial] = None) -> None:
-        super().__init__(client, gaudrial)
+    def __init__(self, client: Any, Guardial: Optional[Guardial] = None) -> None:
+        super().__init__(client, Guardial)
         self._messages = _GuardedMessages(self)
 
     @property

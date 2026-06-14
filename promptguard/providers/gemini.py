@@ -11,15 +11,15 @@ case use ``OpenAIAdapter(client, provider_name="gemini")`` instead.
 
 from typing import Any, Optional
 from .base import ProviderAdapter
-from ..core import Gaudrial
+from ..core import Guardial
 from ..responses import gemini_blocked_response
 
 
 class GeminiAdapter(ProviderAdapter):
     """Wraps a google-genai client to guard prompts."""
 
-    def __init__(self, client: Any, gaudrial: Optional[Gaudrial] = None) -> None:
-        super().__init__(client, gaudrial)
+    def __init__(self, client: Any, Guardial: Optional[Guardial] = None) -> None:
+        super().__init__(client, Guardial)
         self._models = _GuardedModels(self)
 
     @property

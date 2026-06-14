@@ -1,4 +1,4 @@
-"""Structured logging with decision trails for promptgaurd."""
+"""Structured logging with decision trails for promptguard."""
 
 import itertools
 import logging
@@ -39,7 +39,7 @@ class StructuredLogger:
     ) -> None:
         # Unique child logger per instance so one engine's file handler does
         # not leak into another engine's console (and vice versa).
-        self.logger = logging.getLogger(f"promptgaurd.{next(self._ids)}")
+        self.logger = logging.getLogger(f"promptguard.{next(self._ids)}")
         self.logger.setLevel(getattr(logging, level.upper(), logging.INFO))
         self.logger.propagate = False
         if console is None:

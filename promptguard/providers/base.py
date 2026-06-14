@@ -3,15 +3,15 @@
 from typing import Any, Callable, Optional
 from abc import ABC, abstractmethod
 
-from ..core import Gaudrial, Decision
+from ..core import Guardial, Decision
 
 
 class ProviderAdapter(ABC):
     """Abstract base for wrapping a provider client."""
 
-    def __init__(self, client: Any, gaudrial: Optional[Gaudrial] = None) -> None:
+    def __init__(self, client: Any, Guardial: Optional[Guardial] = None) -> None:
         self.client = client
-        self.gaudrial = gaudrial or Gaudrial()
+        self.Guardial = Guardial or Guardial()
 
     @abstractmethod
     def _extract_prompt(self, *args: Any, **kwargs: Any) -> str:
@@ -20,10 +20,10 @@ class ProviderAdapter(ABC):
 
     def _guard_prompt(self, prompt: str, provider_name: str) -> Decision:
         """Run the guard against the extracted prompt and return the Decision."""
-        return self.gaudrial.guard(prompt, provider=provider_name)
+        return self.Guardial.guard(prompt, provider=provider_name)
 
     def _should_mock(self, decision: Decision) -> bool:
-        return decision.decision == "BLOCK" and self.gaudrial.config.block_mode == "mock"
+        return decision.decision == "BLOCK" and self.Guardial.config.block_mode == "mock"
 
     def _blocked_mock(
         self,
@@ -33,11 +33,11 @@ class ProviderAdapter(ABC):
         **builder_kwargs: Any,
     ) -> Any:
         """Build the provider-shaped mock for a blocked prompt and log it."""
-        self.gaudrial.logger.log_block_action(
+        self.Guardial.logger.log_block_action(
             decision.prompt_id, provider_name, "mock_response", decision.reason
         )
         return builder(
             decision,
-            message=self.gaudrial.config.block_message,
+            message=self.Guardial.config.block_message,
             **builder_kwargs,
         )

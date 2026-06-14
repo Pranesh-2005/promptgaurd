@@ -1,14 +1,14 @@
-"""Tests for Gaudrial engine integration."""
+"""Tests for Guardial engine integration."""
 
 import pytest
-from promptgaurd import Gaudrial, Policy, Decision
-from promptgaurd.exceptions import GuardBlocked
+from promptguard import Guardial, Policy, Decision
+from promptguard.exceptions import GuardBlocked
 
 
-class TestGaudrialEngine:
+class TestGuardialEngine:
     def setup_method(self):
         try:
-            self.g = Gaudrial()
+            self.g = Guardial()
         except FileNotFoundError as e:
             pytest.skip(str(e))
 

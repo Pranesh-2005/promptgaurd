@@ -1,4 +1,4 @@
-"""Evaluate the locally exported model (gaurd_model/) on a prompt set.
+"""Evaluate the locally exported model (guard_model/) on a prompt set.
 
 Goes through BertDetector with a local model path so it gets the shared
 model cache, the sliding-window + per-sentence scan, and single-pass
@@ -7,10 +7,10 @@ inference - identical behavior to the published model in the library.
 
 from pathlib import Path
 
-from promptgaurd.detectors.bert_detector import BertDetector
+from promptguard.detectors.bert_detector import BertDetector
 
 # Local model export lives at the repo root, next to examples/
-MODEL_PATH = str(Path(__file__).resolve().parent.parent / "gaurd_model")
+MODEL_PATH = str(Path(__file__).resolve().parent.parent / "guard_model")
 
 detector = BertDetector(model_id=MODEL_PATH)
 

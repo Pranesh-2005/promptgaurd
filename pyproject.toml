@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "promptgaurd"
-version = "0.2.3"
+name = "promptguard"
+version = "0.1.0"
 description = "Universal LLM prompt guard against injection attacks across all providers"
 readme = "README.md"
 license = "MIT"
@@ -42,13 +42,13 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Pranesh-2005/promptgaurd"
-Repository = "https://github.com/Pranesh-2005/promptgaurd"
-Issues = "https://github.com/Pranesh-2005/promptgaurd/issues"
+Homepage = "https://github.com/Pranesh-2005/promptguard"
+Repository = "https://github.com/Pranesh-2005/promptguard"
+Issues = "https://github.com/Pranesh-2005/promptguard/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["promptgaurd*"]
+include = ["promptguard*"]
 
 [tool.black]
 line-length = 100

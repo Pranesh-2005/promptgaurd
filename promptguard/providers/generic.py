@@ -2,15 +2,15 @@
 
 from typing import Any, Optional
 from .base import ProviderAdapter
-from ..core import Gaudrial
+from ..core import Guardial
 from ..responses import openai_blocked_response
 
 
 class GenericAdapter(ProviderAdapter):
     """Wraps any client that has a chat.completions.create method."""
 
-    def __init__(self, client: Any, gaudrial: Optional[Gaudrial] = None) -> None:
-        super().__init__(client, gaudrial)
+    def __init__(self, client: Any, Guardial: Optional[Guardial] = None) -> None:
+        super().__init__(client, Guardial)
         self._chat = _GuardedGenericChat(self)
 
     @property

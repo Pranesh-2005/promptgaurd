@@ -1,8 +1,8 @@
 """Tests for provider adapters."""
 
 import pytest
-from promptgaurd.providers import OpenAIAdapter, AnthropicAdapter, GenericAdapter
-from promptgaurd import Gaudrial, GuardBlocked
+from promptguard.providers import OpenAIAdapter, AnthropicAdapter, GenericAdapter
+from promptguard import Guardial, GuardBlocked
 
 
 class FakeOpenAI:
@@ -22,8 +22,8 @@ class FakeAnthropic:
 
 class TestOpenAIAdapter:
     def test_benign_prompt_passes(self):
-        g = Gaudrial(policy="standard")
-        adapter = OpenAIAdapter(FakeOpenAI(), gaudrial=g)
+        g = Guardial(policy="standard")
+        adapter = OpenAIAdapter(FakeOpenAI(), Guardial=g)
         result = adapter.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": "What is 2+2?"}],
@@ -31,8 +31,8 @@ class TestOpenAIAdapter:
         assert result["choices"][0]["message"]["content"] == "ok"
 
     def test_attack_blocked(self):
-        g = Gaudrial(policy="strict", block_mode="raise")
-        adapter = OpenAIAdapter(FakeOpenAI(), gaudrial=g)
+        g = Guardial(policy="strict", block_mode="raise")
+        adapter = OpenAIAdapter(FakeOpenAI(), Guardial=g)
         with pytest.raises(GuardBlocked):
             adapter.chat.completions.create(
                 model="gpt-4",
@@ -40,8 +40,8 @@ class TestOpenAIAdapter:
             )
 
     def test_vision_messages(self):
-        g = Gaudrial(policy="standard")
-        adapter = OpenAIAdapter(FakeOpenAI(), gaudrial=g)
+        g = Guardial(policy="standard")
+        adapter = OpenAIAdapter(FakeOpenAI(), Guardial=g)
         result = adapter.chat.completions.create(
             model="gpt-4o",
             messages=[
@@ -58,8 +58,8 @@ class TestOpenAIAdapter:
 
 class TestAnthropicAdapter:
     def test_benign_prompt_passes(self):
-        g = Gaudrial(policy="standard")
-        adapter = AnthropicAdapter(FakeAnthropic(), gaudrial=g)
+        g = Guardial(policy="standard")
+        adapter = AnthropicAdapter(FakeAnthropic(), Guardial=g)
         result = adapter.messages.create(
             model="claude-3",
             messages=[{"role": "user", "content": "What is 2+2?"}],
@@ -67,8 +67,8 @@ class TestAnthropicAdapter:
         assert result["content"][0]["text"] == "ok"
 
     def test_system_prompt_included(self):
-        g = Gaudrial(policy="standard")
-        adapter = AnthropicAdapter(FakeAnthropic(), gaudrial=g)
+        g = Guardial(policy="standard")
+        adapter = AnthropicAdapter(FakeAnthropic(), Guardial=g)
         result = adapter.messages.create(
             model="claude-3",
             system="You are a helpful assistant that answers questions concisely.",
@@ -77,8 +77,8 @@ class TestAnthropicAdapter:
         assert result["content"][0]["text"] == "ok"
 
     def test_attack_blocked(self):
-        g = Gaudrial(policy="strict", block_mode="raise")
-        adapter = AnthropicAdapter(FakeAnthropic(), gaudrial=g)
+        g = Guardial(policy="strict", block_mode="raise")
+        adapter = AnthropicAdapter(FakeAnthropic(), Guardial=g)
         with pytest.raises(GuardBlocked):
             adapter.messages.create(
                 model="claude-3",
@@ -88,8 +88,8 @@ class TestAnthropicAdapter:
 
 class TestGenericAdapter:
     def test_benign_prompt_passes(self):
-        g = Gaudrial(policy="standard")
-        adapter = GenericAdapter(FakeOpenAI(), gaudrial=g)
+        g = Guardial(policy="standard")
+        adapter = GenericAdapter(FakeOpenAI(), Guardial=g)
         result = adapter.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": "What is 2+2?"}],
@@ -97,8 +97,8 @@ class TestGenericAdapter:
         assert result["choices"][0]["message"]["content"] == "ok"
 
     def test_attack_blocked(self):
-        g = Gaudrial(policy="strict", block_mode="raise")
-        adapter = GenericAdapter(FakeOpenAI(), gaudrial=g)
+        g = Guardial(policy="strict", block_mode="raise")
+        adapter = GenericAdapter(FakeOpenAI(), Guardial=g)
         with pytest.raises(GuardBlocked):
             adapter.chat.completions.create(
                 model="gpt-4",

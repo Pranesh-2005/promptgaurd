@@ -1,4 +1,4 @@
-"""Exceptions raised by promptgaurd."""
+"""Exceptions raised by promptguard."""
 
 from typing import Optional
 

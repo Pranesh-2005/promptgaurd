@@ -1,14 +1,14 @@
 """Shared helpers for the provider example scripts.
 
 - Loads credentials from a .env file (examples/.env or repo root .env).
-- Builds a Gaudrial engine that writes structured logs to examples/logs/
+- Builds a Guardial engine that writes structured logs to examples/logs/
   (one file per provider) so the console only ever shows the response.
 """
 
 import os
 from pathlib import Path
 
-from promptgaurd import Gaudrial
+from promptguard import Guardial
 
 EXAMPLES_DIR = Path(__file__).resolve().parent
 LOGS_DIR = EXAMPLES_DIR / "logs"
@@ -29,9 +29,9 @@ def load_dotenv() -> None:
             break
 
 
-def make_gaudrial(provider: str, policy: str = "strict") -> Gaudrial:
+def make_Guardial(provider: str, policy: str = "strict") -> Guardial:
     """Engine with file-only logging: examples/logs/<provider>.log"""
-    return Gaudrial(policy=policy, log_file=str(LOGS_DIR / f"{provider}.log"))
+    return Guardial(policy=policy, log_file=str(LOGS_DIR / f"{provider}.log"))
 
 
 def require_env(*names: str) -> None:

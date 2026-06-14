@@ -1,4 +1,4 @@
-"""Provider adapters for promptgaurd."""
+"""Provider adapters for promptguard."""
 
 from .base import ProviderAdapter
 from .openai import OpenAIAdapter

@@ -1,4 +1,4 @@
-"""promptgaurd + AWS Bedrock (boto3 Converse API).
+"""promptguard + AWS Bedrock (boto3 Converse API).
 
 Needs AWS credentials (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY or an AWS
 profile) and optionally AWS_REGION (defaults to us-east-1), plus:
@@ -15,8 +15,8 @@ import os
 
 import boto3
 
-from promptgaurd.responses import render_block_message
-from _common import ATTACK, BENIGN, load_dotenv, make_gaudrial, show
+from promptguard.responses import render_block_message
+from _common import ATTACK, BENIGN, load_dotenv, make_Guardial, show
 
 load_dotenv()
 
@@ -24,7 +24,7 @@ MODEL_ID = os.environ.get("BEDROCK_MODEL_ID", "anthropic.claude-3-haiku-20240307
 REGION = os.environ.get("AWS_REGION", "us-east-1")
 
 bedrock = boto3.client("bedrock-runtime", region_name=REGION)
-g = make_gaudrial("bedrock")
+g = make_Guardial("bedrock")
 
 
 def ask(label, prompt):
