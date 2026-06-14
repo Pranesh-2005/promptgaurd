@@ -1,4 +1,4 @@
-"""promptguard + Azure OpenAI. Needs (env or examples/.env):
+"""guardix + Azure OpenAI. Needs (env or examples/.env):
 
     AZURE_OPENAI_API_KEY=<your-key>
     AZURE_OPENAI_ENDPOINT=https://<resource>.openai.azure.com/
@@ -12,8 +12,8 @@ import os
 
 from openai import AzureOpenAI
 
-from promptguard import guard_client
-from _common import ATTACK, BENIGN, load_dotenv, make_Guardial, require_env, show
+from guardix import guard_client
+from _common import ATTACK, BENIGN, load_dotenv, make_guardial, require_env, show
 
 load_dotenv()
 require_env("AZURE_OPENAI_API_KEY", "AZURE_OPENAI_ENDPOINT")
@@ -26,7 +26,7 @@ azure = AzureOpenAI(
     azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
     api_version=API_VERSION,
 )
-client = guard_client(azure, Guardial=make_Guardial("azure-openai"), provider="azure-openai")
+client = guard_client(azure, guardial=make_guardial("azure-openai"), provider="azure-openai")
 
 
 def ask(label, prompt):

@@ -1,4 +1,4 @@
-"""promptguard + Groq (OpenAI-compatible endpoint). Needs GROQ_API_KEY.
+"""guardix + Groq (OpenAI-compatible endpoint). Needs GROQ_API_KEY.
 
 Uses the openai SDK pointed at Groq's endpoint - no extra dependency.
 Logs go to examples/logs/groq.log - the console only shows responses.
@@ -8,8 +8,8 @@ import os
 
 from openai import OpenAI
 
-from promptguard import guard_client
-from _common import ATTACK, BENIGN, load_dotenv, make_Guardial, require_env, show
+from guardix import guard_client
+from _common import ATTACK, BENIGN, load_dotenv, make_guardial, require_env, show
 
 load_dotenv()
 require_env("GROQ_API_KEY")
@@ -17,7 +17,7 @@ require_env("GROQ_API_KEY")
 MODEL = "llama-3.3-70b-versatile"
 client = guard_client(
     OpenAI(base_url="https://api.groq.com/openai/v1", api_key=os.environ["GROQ_API_KEY"]),
-    Guardial=make_Guardial("groq"),
+    guardial=make_guardial("groq"),
     provider="groq",
 )
 

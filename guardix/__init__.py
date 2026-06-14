@@ -1,4 +1,4 @@
-"""promptguard — Universal LLM prompt guard against injection attacks."""
+"""guardix — Universal LLM prompt guard against injection attacks."""
 
 from typing import Any, Optional
 
@@ -20,7 +20,7 @@ __all__ = [
 ]
 
 
-def guard_client(client: Any, Guardial: Optional[Guardial] = None, provider: Optional[str] = None) -> Any:
+def guard_client(client: Any, guardial: Optional[Guardial] = None, provider: Optional[str] = None) -> Any:
     """Wrap any supported LLM client with prompt guarding in one line.
 
     Auto-detects the client type:
@@ -32,7 +32,7 @@ def guard_client(client: Any, Guardial: Optional[Guardial] = None, provider: Opt
     ``provider`` overrides the name used in logs (e.g. "groq", "openrouter").
 
     Usage:
-        from promptguard import guard_client
+        from guardix import guard_client
         client = guard_client(OpenAI())
         client.chat.completions.create(...)  # guarded, never raises on block
     """
@@ -40,16 +40,16 @@ def guard_client(client: Any, Guardial: Optional[Guardial] = None, provider: Opt
 
     messages = getattr(client, "messages", None)
     if messages is not None and callable(getattr(messages, "create", None)):
-        return AnthropicAdapter(client, Guardial=Guardial)
+        return AnthropicAdapter(client, guardial=guardial)
 
     models = getattr(client, "models", None)
     if models is not None and callable(getattr(models, "generate_content", None)):
-        return GeminiAdapter(client, Guardial=Guardial)
+        return GeminiAdapter(client, guardial=guardial)
 
     chat = getattr(client, "chat", None)
     completions = getattr(chat, "completions", None) if chat is not None else None
     if completions is not None and callable(getattr(completions, "create", None)):
-        return OpenAIAdapter(client, Guardial=Guardial, provider_name=provider or "openai")
+        return OpenAIAdapter(client, guardial=guardial, provider_name=provider or "openai")
 
     raise TypeError(
         "Unsupported client: expected an object with messages.create (Anthropic), "

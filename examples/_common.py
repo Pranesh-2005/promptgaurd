@@ -8,7 +8,7 @@
 import os
 from pathlib import Path
 
-from promptguard import Guardial
+from guardix import Guardial
 
 EXAMPLES_DIR = Path(__file__).resolve().parent
 LOGS_DIR = EXAMPLES_DIR / "logs"
@@ -29,7 +29,7 @@ def load_dotenv() -> None:
             break
 
 
-def make_Guardial(provider: str, policy: str = "strict") -> Guardial:
+def make_guardial(provider: str, policy: str = "strict") -> Guardial:
     """Engine with file-only logging: examples/logs/<provider>.log"""
     return Guardial(policy=policy, log_file=str(LOGS_DIR / f"{provider}.log"))
 

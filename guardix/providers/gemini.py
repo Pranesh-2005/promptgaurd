@@ -18,8 +18,8 @@ from ..responses import gemini_blocked_response
 class GeminiAdapter(ProviderAdapter):
     """Wraps a google-genai client to guard prompts."""
 
-    def __init__(self, client: Any, Guardial: Optional[Guardial] = None) -> None:
-        super().__init__(client, Guardial)
+    def __init__(self, client: Any, guardial: Optional[Guardial] = None) -> None:
+        super().__init__(client, guardial)
         self._models = _GuardedModels(self)
 
     @property

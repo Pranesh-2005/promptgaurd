@@ -9,8 +9,8 @@ from ..responses import openai_blocked_response
 class GenericAdapter(ProviderAdapter):
     """Wraps any client that has a chat.completions.create method."""
 
-    def __init__(self, client: Any, Guardial: Optional[Guardial] = None) -> None:
-        super().__init__(client, Guardial)
+    def __init__(self, client: Any, guardial: Optional[Guardial] = None) -> None:
+        super().__init__(client, guardial)
         self._chat = _GuardedGenericChat(self)
 
     @property

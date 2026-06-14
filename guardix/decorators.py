@@ -18,7 +18,7 @@ _RESPONSE_BUILDERS = {
 }
 
 
-def Guardial_guard(
+def guardial_guard(
     policy: Optional[str] = None,
     threshold: Optional[float] = None,
     fail_mode: Optional[str] = None,
@@ -36,7 +36,7 @@ def Guardial_guard(
     flowing. Pass ``block_mode="raise"`` for the old GuardBlocked behavior.
 
     Usage:
-        @Guardial_guard(policy="strict")
+        @guardial_guard(policy="strict")
         def chat(messages):
             return openai_client.chat.completions.create(model="gpt-4", messages=messages)
     """
@@ -52,10 +52,8 @@ def Guardial_guard(
     def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
-            # Try to extract prompt from messages keyword or positional arg
             messages = kwargs.get("messages")
             if messages is None and args:
-                # Heuristic: first arg might be messages or a prompt string
                 first = args[0]
                 if isinstance(first, str):
                     messages = [{"role": "user", "content": first}]
@@ -77,7 +75,7 @@ def Guardial_guard(
     return decorator
 
 
-def Guardial_audit(
+def guardial_audit(
     policy: Optional[str] = None,
     provider: str = "unknown",
     log_sink: Optional[Callable[[Any], None]] = None,
@@ -85,7 +83,7 @@ def Guardial_audit(
     """Decorator that only audits (never blocks) LLM calls.
 
     Usage:
-        @Guardial_audit(policy="standard")
+        @guardial_audit(policy="standard")
         def chat(messages):
             return openai_client.chat.completions.create(model="gpt-4", messages=messages)
     """

@@ -9,9 +9,9 @@ from ..core import Guardial, Decision
 class ProviderAdapter(ABC):
     """Abstract base for wrapping a provider client."""
 
-    def __init__(self, client: Any, Guardial: Optional[Guardial] = None) -> None:
+    def __init__(self, client: Any, guardial: Optional[Guardial] = None) -> None:
         self.client = client
-        self.Guardial = Guardial or Guardial()
+        self.guardial = guardial or Guardial()
 
     @abstractmethod
     def _extract_prompt(self, *args: Any, **kwargs: Any) -> str:
@@ -20,10 +20,10 @@ class ProviderAdapter(ABC):
 
     def _guard_prompt(self, prompt: str, provider_name: str) -> Decision:
         """Run the guard against the extracted prompt and return the Decision."""
-        return self.Guardial.guard(prompt, provider=provider_name)
+        return self.guardial.guard(prompt, provider=provider_name)
 
     def _should_mock(self, decision: Decision) -> bool:
-        return decision.decision == "BLOCK" and self.Guardial.config.block_mode == "mock"
+        return decision.decision == "BLOCK" and self.guardial.config.block_mode == "mock"
 
     def _blocked_mock(
         self,
@@ -33,11 +33,11 @@ class ProviderAdapter(ABC):
         **builder_kwargs: Any,
     ) -> Any:
         """Build the provider-shaped mock for a blocked prompt and log it."""
-        self.Guardial.logger.log_block_action(
+        self.guardial.logger.log_block_action(
             decision.prompt_id, provider_name, "mock_response", decision.reason
         )
         return builder(
             decision,
-            message=self.Guardial.config.block_message,
+            message=self.guardial.config.block_message,
             **builder_kwargs,
         )

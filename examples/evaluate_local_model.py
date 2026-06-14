@@ -7,7 +7,7 @@ inference - identical behavior to the published model in the library.
 
 from pathlib import Path
 
-from promptguard.detectors.bert_detector import BertDetector
+from guardix.detectors.bert_detector import BertDetector
 
 # Local model export lives at the repo root, next to examples/
 MODEL_PATH = str(Path(__file__).resolve().parent.parent / "guard_model")

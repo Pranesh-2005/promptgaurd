@@ -1,18 +1,18 @@
-"""promptguard + OpenAI. Needs OPENAI_API_KEY (env or .env).
+"""guardix + OpenAI. Needs OPENAI_API_KEY (env or .env).
 
 Logs go to examples/logs/openai.log - the console only shows responses.
 """
 
 from openai import OpenAI
 
-from promptguard import guard_client
-from _common import ATTACK, BENIGN, load_dotenv, make_Guardial, require_env, show
+from guardix import guard_client
+from _common import ATTACK, BENIGN, load_dotenv, make_guardial, require_env, show
 
 load_dotenv()
 require_env("OPENAI_API_KEY")
 
 MODEL = "gpt-4o-mini"
-client = guard_client(OpenAI(), Guardial=make_Guardial("openai"))
+client = guard_client(OpenAI(), guardial=make_guardial("openai"))
 
 
 def ask(label, prompt):

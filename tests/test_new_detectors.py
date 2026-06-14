@@ -1,8 +1,8 @@
 """Tests for Guardial engine integration."""
 
 import pytest
-from promptguard import Guardial, Policy, Decision
-from promptguard.exceptions import GuardBlocked
+from guardix import Guardial, Policy, Decision
+from guardix.exceptions import GuardBlocked
 
 
 class TestGuardialEngine:

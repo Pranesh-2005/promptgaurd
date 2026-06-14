@@ -1,7 +1,7 @@
 """Integration tests for the Guardial engine."""
 
 import pytest
-from promptguard import Guardial, GuardBlocked, GuardError
+from guardix import Guardial, GuardBlocked, GuardError
 
 
 class TestGuardialEngine:
@@ -28,7 +28,7 @@ class TestGuardialEngine:
 
     def test_fail_closed_on_error(self):
         # If a detector throws, fail_mode=closed should surface GuardError
-        from promptguard.detectors.base import BaseDetector
+        from guardix.detectors.base import BaseDetector
         class BrokenDetector(BaseDetector):
             name = "broken"
             def detect(self, prompt: str) -> float:

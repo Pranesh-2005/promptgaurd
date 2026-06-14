@@ -10,7 +10,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from .base import BaseDetector
 
 
-MODEL_ID = "PraneshJs/promptguard"
+MODEL_ID = "PraneshJs/promptgaurd"
 
 # Process-wide cache so every Guardial/BertDetector instance shares one
 # loaded model instead of re-downloading and re-loading per instance.

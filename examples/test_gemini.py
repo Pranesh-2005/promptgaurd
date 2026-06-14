@@ -1,4 +1,4 @@
-"""promptguard + Google Gemini (google-genai SDK).
+"""guardix + Google Gemini (google-genai SDK).
 
 Needs GEMINI_API_KEY or GOOGLE_API_KEY (env or .env), and:
     pip install google-genai
@@ -10,15 +10,15 @@ import os
 
 from google import genai
 
-from promptguard import guard_client
-from _common import ATTACK, BENIGN, load_dotenv, make_Guardial, require_env, show
+from guardix import guard_client
+from _common import ATTACK, BENIGN, load_dotenv, make_guardial, require_env, show
 
 load_dotenv()
 if not (os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")):
     require_env("GEMINI_API_KEY")
 
 MODEL = "gemini-2.0-flash"
-client = guard_client(genai.Client(), Guardial=make_Guardial("gemini"))
+client = guard_client(genai.Client(), guardial=make_guardial("gemini"))
 
 
 def ask(label, prompt):

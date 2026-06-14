@@ -9,8 +9,8 @@ from ..responses import anthropic_blocked_response
 class AnthropicAdapter(ProviderAdapter):
     """Wraps an Anthropic client to guard prompts."""
 
-    def __init__(self, client: Any, Guardial: Optional[Guardial] = None) -> None:
-        super().__init__(client, Guardial)
+    def __init__(self, client: Any, guardial: Optional[Guardial] = None) -> None:
+        super().__init__(client, guardial)
         self._messages = _GuardedMessages(self)
 
     @property

@@ -11,7 +11,7 @@ import time
 from typing import Any, Dict, List, Union
 
 DEFAULT_BLOCK_MESSAGE = (
-    "This request was blocked by promptguard: potential prompt injection "
+    "This request was blocked by guardix: potential prompt injection "
     "detected (score={score:.2f}). Reference ID: {prompt_id}."
 )
 
@@ -73,7 +73,7 @@ def openai_blocked_response(decision: Any, model: str = "unknown", message: Unio
     Together, and any other OpenAI-compatible provider."""
     text = render_block_message(decision, message)
     return MockObject({
-        "id": f"promptguard-blocked-{decision.prompt_id}",
+        "id": f"guardix-blocked-{decision.prompt_id}",
         "object": "chat.completion",
         "created": int(time.time()),
         "model": model,
@@ -86,7 +86,7 @@ def openai_blocked_response(decision: Any, model: str = "unknown", message: Unio
             }
         ],
         "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
-        "promptguard": {"blocked": True, "prompt_id": decision.prompt_id, "reason": decision.reason},
+        "guardix": {"blocked": True, "prompt_id": decision.prompt_id, "reason": decision.reason},
     })
 
 
@@ -94,7 +94,7 @@ def anthropic_blocked_response(decision: Any, model: str = "unknown", message: U
     """Anthropic Messages API-shaped mock."""
     text = render_block_message(decision, message)
     return MockObject({
-        "id": f"promptguard-blocked-{decision.prompt_id}",
+        "id": f"guardix-blocked-{decision.prompt_id}",
         "type": "message",
         "role": "assistant",
         "model": model,
@@ -102,7 +102,7 @@ def anthropic_blocked_response(decision: Any, model: str = "unknown", message: U
         "stop_reason": "end_turn",
         "stop_sequence": None,
         "usage": {"input_tokens": 0, "output_tokens": 0},
-        "promptguard": {"blocked": True, "prompt_id": decision.prompt_id, "reason": decision.reason},
+        "guardix": {"blocked": True, "prompt_id": decision.prompt_id, "reason": decision.reason},
     })
 
 
@@ -119,11 +119,11 @@ def gemini_blocked_response(decision: Any, message: Union[str, None] = None) -> 
             }
         ],
         "usage_metadata": {"prompt_token_count": 0, "candidates_token_count": 0, "total_token_count": 0},
-        "promptguard": {"blocked": True, "prompt_id": decision.prompt_id, "reason": decision.reason},
+        "guardix": {"blocked": True, "prompt_id": decision.prompt_id, "reason": decision.reason},
     })
 
 
 def is_blocked_response(response: Any) -> bool:
-    """True if a response object is a promptguard mock for a blocked prompt."""
-    meta = getattr(response, "promptguard", None)
+    """True if a response object is a guardix mock for a blocked prompt."""
+    meta = getattr(response, "guardix", None)
     return bool(meta is not None and getattr(meta, "blocked", False))

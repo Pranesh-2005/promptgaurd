@@ -19,10 +19,10 @@ class OpenAIAdapter(ProviderAdapter):
     def __init__(
         self,
         client: Any,
-        Guardial: Optional[Guardial] = None,
+        guardial: Optional[Guardial] = None,
         provider_name: str = "openai",
     ) -> None:
-        super().__init__(client, Guardial)
+        super().__init__(client, guardial)
         self.provider_name = provider_name
         self._chat = _GuardedChat(self)
 

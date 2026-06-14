@@ -4,7 +4,7 @@ Goes through BertDetector so it gets the shared model cache, the
 sliding-window + per-sentence scan, and single-pass inference.
 """
 
-from promptguard.detectors.bert_detector import BertDetector
+from guardix.detectors.bert_detector import BertDetector
 
 detector = BertDetector()
 

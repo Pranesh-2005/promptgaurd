@@ -1,8 +1,8 @@
 """Tests for provider adapters."""
 
 import pytest
-from promptguard.providers import OpenAIAdapter, AnthropicAdapter, GenericAdapter
-from promptguard import Guardial, GuardBlocked
+from guardix.providers import OpenAIAdapter, AnthropicAdapter, GenericAdapter
+from guardix import Guardial, GuardBlocked
 
 
 class FakeOpenAI:
@@ -23,7 +23,7 @@ class FakeAnthropic:
 class TestOpenAIAdapter:
     def test_benign_prompt_passes(self):
         g = Guardial(policy="standard")
-        adapter = OpenAIAdapter(FakeOpenAI(), Guardial=g)
+        adapter = OpenAIAdapter(FakeOpenAI(), guardial=g)
         result = adapter.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": "What is 2+2?"}],
@@ -32,7 +32,7 @@ class TestOpenAIAdapter:
 
     def test_attack_blocked(self):
         g = Guardial(policy="strict", block_mode="raise")
-        adapter = OpenAIAdapter(FakeOpenAI(), Guardial=g)
+        adapter = OpenAIAdapter(FakeOpenAI(), guardial=g)
         with pytest.raises(GuardBlocked):
             adapter.chat.completions.create(
                 model="gpt-4",
@@ -41,7 +41,7 @@ class TestOpenAIAdapter:
 
     def test_vision_messages(self):
         g = Guardial(policy="standard")
-        adapter = OpenAIAdapter(FakeOpenAI(), Guardial=g)
+        adapter = OpenAIAdapter(FakeOpenAI(), guardial=g)
         result = adapter.chat.completions.create(
             model="gpt-4o",
             messages=[
@@ -59,7 +59,7 @@ class TestOpenAIAdapter:
 class TestAnthropicAdapter:
     def test_benign_prompt_passes(self):
         g = Guardial(policy="standard")
-        adapter = AnthropicAdapter(FakeAnthropic(), Guardial=g)
+        adapter = AnthropicAdapter(FakeAnthropic(), guardial=g)
         result = adapter.messages.create(
             model="claude-3",
             messages=[{"role": "user", "content": "What is 2+2?"}],
@@ -68,7 +68,7 @@ class TestAnthropicAdapter:
 
     def test_system_prompt_included(self):
         g = Guardial(policy="standard")
-        adapter = AnthropicAdapter(FakeAnthropic(), Guardial=g)
+        adapter = AnthropicAdapter(FakeAnthropic(), guardial=g)
         result = adapter.messages.create(
             model="claude-3",
             system="You are a helpful assistant that answers questions concisely.",
@@ -78,7 +78,7 @@ class TestAnthropicAdapter:
 
     def test_attack_blocked(self):
         g = Guardial(policy="strict", block_mode="raise")
-        adapter = AnthropicAdapter(FakeAnthropic(), Guardial=g)
+        adapter = AnthropicAdapter(FakeAnthropic(), guardial=g)
         with pytest.raises(GuardBlocked):
             adapter.messages.create(
                 model="claude-3",
@@ -89,7 +89,7 @@ class TestAnthropicAdapter:
 class TestGenericAdapter:
     def test_benign_prompt_passes(self):
         g = Guardial(policy="standard")
-        adapter = GenericAdapter(FakeOpenAI(), Guardial=g)
+        adapter = GenericAdapter(FakeOpenAI(), guardial=g)
         result = adapter.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": "What is 2+2?"}],
@@ -98,7 +98,7 @@ class TestGenericAdapter:
 
     def test_attack_blocked(self):
         g = Guardial(policy="strict", block_mode="raise")
-        adapter = GenericAdapter(FakeOpenAI(), Guardial=g)
+        adapter = GenericAdapter(FakeOpenAI(), guardial=g)
         with pytest.raises(GuardBlocked):
             adapter.chat.completions.create(
                 model="gpt-4",

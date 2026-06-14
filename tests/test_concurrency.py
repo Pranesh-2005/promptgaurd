@@ -1,10 +1,10 @@
-"""Concurrency and performance tests for promptguard."""
+"""Concurrency and performance tests for guardix."""
 
 import time
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import pytest
-from promptguard import Guardial
+from guardix import Guardial
 
 
 class TestConcurrency:
