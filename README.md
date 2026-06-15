@@ -161,7 +161,7 @@ Guardial(policy="strict", fail_mode="closed")
 
 ## Detection
 
-Detection is powered by a fine-tuned **BERT-mini** binary classifier (safe/attack), downloaded from Hugging Face (`PraneshJs/guardix`) on first use and cached for the process.
+Detection is powered by a fine-tuned **BERT-mini** binary classifier (safe/attack), downloaded from Hugging Face (`PraneshJs/PromptGuard`) on first use and cached for the process.
 
 To prevent truncation bypass on long inputs, every prompt is scored at two granularities in a single batched forward pass:
 
@@ -196,7 +196,7 @@ The full training code is in [`colab_train.ipynb`](colab_train.ipynb) (runs on G
    - [`PraneshJs/Educational_Prompt`](https://huggingface.co/datasets/PraneshJs/Educational_Prompt) — teaches the model that *talking about* injection attacks ("Explain prompt injection") is safe; only *performing* them is an attack.
 2. **Stage 2 (guard_v3)** — continues fine-tuning on [`PraneshJs/Prompt_injection_safe`](https://huggingface.co/datasets/PraneshJs/Prompt_injection_safe) (2 epochs, lr 1e-5) to sharpen the safe/attack boundary.
 
-The resulting model is published as [`PraneshJs/guardix`](https://huggingface.co/PraneshJs/guardix) and is what this package downloads on first use.
+The resulting model is published as [`PraneshJs/PromptGuard`](https://huggingface.co/PraneshJs/PromptGuard) and is what this package downloads on first use.
 
 ```mermaid
 flowchart TD
