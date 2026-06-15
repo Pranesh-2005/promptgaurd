@@ -7,7 +7,7 @@ from .exceptions import GuardBlocked, GuardError
 from .config import Config
 from .responses import is_blocked_response
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = [
     "Guardial",
     "Policy",

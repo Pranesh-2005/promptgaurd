@@ -65,14 +65,22 @@ class BertDetector(BaseDetector):
         return segments
 
     def _predict(self, prompt: str) -> Tuple[float, int, float]:
-        """Run one batched inference over all sliding windows and sentences.
+        """Run batched inference over all sliding windows and sentences.
 
         Returns (attack_prob, pred_id, confidence) taken from the segment
         with the highest attack probability.
+
+        Two separate tokenizer calls prevent short sentence segments from
+        being padded to 128 tokens (the sliding-window length), which causes
+        the model to misclassify heavily-padded injection sentences.
         """
+        segments = self._segments(prompt)
+        all_probs = []
+
         with self._lock:
-            inputs = self.tokenizer(
-                self._segments(prompt),
+            # Full prompt: sliding windows, all near max_len → minimal padding
+            full_enc = self.tokenizer(
+                segments[0],
                 truncation=True,
                 padding=True,
                 max_length=self.max_len,
@@ -80,11 +88,25 @@ class BertDetector(BaseDetector):
                 return_overflowing_tokens=True,
                 return_tensors="pt",
             )
-            inputs.pop("overflow_to_sample_mapping", None)
-            inputs = inputs.to(self.device)
+            full_enc.pop("overflow_to_sample_mapping", None)
+            full_enc = full_enc.to(self.device)
             with torch.no_grad():
-                logits = self.model(**inputs).logits
-        probs = torch.softmax(logits, dim=-1)  # (num_segments, 2)
+                all_probs.append(torch.softmax(self.model(**full_enc).logits, dim=-1))
+
+            # Sentence segments: short, pad only to their own longest (~20-30 tokens)
+            if len(segments) > 1:
+                sent_enc = self.tokenizer(
+                    segments[1:],
+                    truncation=True,
+                    padding=True,
+                    max_length=self.max_len,
+                    return_tensors="pt",
+                )
+                sent_enc = sent_enc.to(self.device)
+                with torch.no_grad():
+                    all_probs.append(torch.softmax(self.model(**sent_enc).logits, dim=-1))
+
+        probs = torch.cat(all_probs, dim=0)
         worst = int(torch.argmax(probs[:, 1]))
         segment_probs = probs[worst]
         pred_id = int(torch.argmax(segment_probs))
